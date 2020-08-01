@@ -4,6 +4,8 @@ import tool from '../Tool';
 import '../mock/mock';
 import axios from 'axios';
 
+axios.defaults.baseURL='http://localhost:8080'
+
 export const updateProductParameterAction=(value:any):any=>{
     const action = {
         type:UPDATE_PRODUCT_PARAMETER,
@@ -13,8 +15,7 @@ export const updateProductParameterAction=(value:any):any=>{
 }
 
 function getUrl(nameQry:string,priceQry:string,typeQry:string):string{
-    let apiUrl = '';
-    let url:string = `${apiUrl}/product`;
+    let url:string = `/product`;
     if (!tool.isNullString(nameQry)) {
         url += '&nameQry=' + nameQry;
     }
@@ -27,11 +28,24 @@ function getUrl(nameQry:string,priceQry:string,typeQry:string):string{
     return url;
 }
 
+function getQueryParameter(nameQry:string,priceQry:string,typeQry:string):any{
+    let oReturn:any={};
+    if (!tool.isNullString(nameQry)) {
+        oReturn.nameQry=nameQry;
+    }
+    if (!tool.isNullString(priceQry)) {
+        oReturn.priceQry=priceQry;
+    }
+    if(!tool.isNullString(typeQry)){
+        oReturn.typeQry=typeQry;
+    }
+    return oReturn;
+}
+
 export const queryProductAction=():any=>{
 
     return (dispatch:any,getState:any)=>{
-        //debugger;
-        var httpHelper = HttpHelper.getInstance();
+        debugger;
         
         const state=getState();
 
@@ -39,30 +53,41 @@ export const queryProductAction=():any=>{
         let priceQry=state.ProductReducer.priceQry;
         let typeQry=state.ProductReducer.typeQry;
         
-        
-        let url = getUrl(nameQry,priceQry,typeQry);
-        queryDataByHttp(httpHelper,url,dispatch);
+        let queryParams = getQueryParameter(nameQry,priceQry,typeQry)
+        let url = '/product';
+        queryDataByHttp(url,queryParams,dispatch);
     };
 }
 
 export const addProductAction=(product:string):any=>{
     return (
         async (dispatch:any,getState:any)=>{
-            let httpHelper = HttpHelper.getInstance();
+
             const state=getState();
             let nameQry=state.ProductReducer.nameQry;
             let priceQry=state.ProductReducer.priceQry;
             let typeQry=state.ProductReducer.typeQry;
 
-            let url = getUrl('','','');
-
-            await httpHelper.post(url, '', product)
-                .then(data => {
-                    alert(data['msg']);
-                });
+            let url = '/product';
+            axios({
+                method: 'POST',
+                url: url,
+                data:JSON.stringify(product),
+            })
+            .then(res => {
+                alert(res.status === 200||201 ? 'Add success!' : 'Add fail!');
+                let queryParams=getQueryParameter(nameQry,priceQry,typeQry);
+                url = '/product';
+                queryDataByHttp(url,queryParams,dispatch);
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Add failed!')
+            });
+            
 
             url = getUrl(nameQry,priceQry,typeQry);
-            queryDataByHttp(httpHelper, url, dispatch);
+            // queryDataByHttp( url, dispatch);
         }
     );
 }
@@ -85,15 +110,14 @@ export const updateProductAction=(product:any):any=>{
                 });
 
             url = getUrl(nameQry,priceQry,typeQry);
-            queryDataByHttp(httpHelper, url, dispatch);
+            // queryDataByHttp( url, dispatch);
         }
     );
 }
 
-export  const deleteProductAction=(productId:any):any=>{
+export  const deleteProductAction=(productId:string):any=>{
     return (
         async (dispatch:any,getState:any)=>{
-            let httpHelper = HttpHelper.getInstance();
             const state=getState();
             let nameQry=state.ProductReducer.nameQry;
             let priceQry=state.ProductReducer.priceQry;
@@ -102,27 +126,42 @@ export  const deleteProductAction=(productId:any):any=>{
             let apiUrl = getUrl('','','');
             let url = `${apiUrl}/${productId}`;
             console.log(`execute delete ${url}`);
-            await httpHelper.delete(url, '')
-                .then(message => {
-                    alert(message);
-                });
-                
-                
-            url = getUrl(nameQry,priceQry,typeQry);
-            queryDataByHttp(httpHelper, url, dispatch);
+            axios({
+                method: 'DELETE',
+                url: url,
+            })
+            .then(res => {
+                console.log(res)
+                switch (res.status) {
+                    case 200:
+                    case 204:
+                        alert('Delete success!');
+                        break;
+                    default:
+                        alert('Delete failed!');
+                }
+                let queryParams=getQueryParameter(nameQry,priceQry,typeQry)
+                url = '/product';
+                queryDataByHttp(url,queryParams,dispatch);
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Delete failed!')
+            });
         }
     );
 }
 
-async function queryDataByHttp(httpHelper: HttpHelper, url: string, dispatch: any) {
-    debugger;
-    const res = axios({
+async function queryDataByHttp(url: string, queryParams:string, dispatch: any) {
+    // debugger;
+    axios({
         method: 'GET',
         url: url,
-        params:{nameQry:'',priceQry:'',typeQry:''},
+        params:queryParams,
     })
     .then(res => {
-        let products = res?.data?.value;
+        console.log(res)
+        let products = res?.data;
         let value = {
                 products,
                 loading: false

@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ProductList from './components/ProductList';
 import AppStore from './redux/AppStore';
 import {Provider} from 'react-redux';
+import 'antd/dist/antd.css';
+import AppLayout from './components/Layout';
 
 
 
 
 ReactDOM.render(
   <Provider store={AppStore}>
-    <ProductList/>
+    <AppLayout/>
   </Provider>
   ,
   document.getElementById('root')
