@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
-import ProductList from './ProductList';
+import ProductList from './product/ProductList';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 const AppLayout=()=>{
     return (
@@ -12,7 +12,7 @@ const AppLayout=()=>{
                 <Content>
                     <ProductList/>
                 </Content>
-                <Footer></Footer>
+                {/* <Footer></Footer> */}
             </Layout>
         </>
     );

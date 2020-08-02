@@ -1,4 +1,4 @@
-import { IProduct, ProductType } from '../components/Product';
+import { IProduct, ProductType } from '../components/product/Product';
 export interface IProductState{
     nameQry:string|null,
     priceQry:number|null,

@@ -10,3 +10,12 @@ export interface IProduct{
     type:ProductType;
     description:string;
 }
+
+export interface IAddOrUpdateProductPageState {
+    open: boolean;
+    id: string;
+    name: string;
+    price: string;
+    type: string;
+    description: string;
+}

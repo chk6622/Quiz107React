@@ -2,7 +2,7 @@ export default class Tool{
 
     public static isNullString(str:string|null|undefined):boolean{
         let bReturn: boolean = false;
-        if (str===null||str===undefined||typeof(str)==='string'&&str.replace(/(^s*)|(s*$)/g, "").length ===0)
+        if (str===null||str===undefined||(typeof(str)==='string'&&str.replace(/(^s*)|(s*$)/g, "").length ===0))
         {
         
             bReturn=true;
@@ -11,16 +11,16 @@ export default class Tool{
         return bReturn;
     }
 
-    public static  getUrlParams(url:string,name:string):string|null{
-        url=url.toLowerCase();
-        name=name.toLowerCase();
-        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');    
-        let r = url.match(reg);    
-        if (r != null) {        
-            return unescape(r[2]);    
-        }    
-        return null;
-    }
+    // public static  getUrlParams(url:string,name:string):string|null{
+    //     url=url.toLowerCase();
+    //     name=name.toLowerCase();
+    //     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');    
+    //     let r = url.match(reg);    
+    //     if (r != null) {        
+    //         return unescape(r[2]);    
+    //     }    
+    //     return null;
+    // }
 
     public static  parsingUrl(url:string,name:string):string|null{
         let sReturn:string|null =null;
@@ -28,10 +28,7 @@ export default class Tool{
         name=name.toLowerCase();
         //debugger
         const searchURL = new URL(url);
-
-
-        const { href, protocol, hostname, pathname, search, searchParams } = searchURL;
-
+        const { pathname, searchParams } = searchURL;
         if(name==='id'){
             let pathes:string[]=pathname.split('/')
             if(pathes!==null&&pathes.length>0){
@@ -41,11 +38,6 @@ export default class Tool{
         else{
             sReturn=searchParams.get(name);
         }
-        // for(let (item:any) of searchParams..entries()) {
-        //     console.log(`key: ${item.key}, value: ${value}`)
-        // }
-        // console.log(searchURL);
-
         return sReturn
     }
 }
