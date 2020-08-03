@@ -20,19 +20,19 @@ export default function AppAlert(props:any){
         switch(msg.type){
             case SUCCESS_MESSAGE:
                 messageType='success';
-                message.success(msg.value,3);
+                // message.success(msg.value,3);
                 break;
             case INFO_MESSAGE:
                 messageType='info';
-                message.info(msg.value,3);
+                // message.info(msg.value,3);
                 break;
             case WARNING_MESSAGE:
                 messageType='warning';
-                message.warning(msg.value,3);
+                // message.warning(msg.value,3);
                 break;
             case ERROR_MESSAGE:
                 messageType='error';
-                message.error(msg.value,3);
+                // message.error(msg.value,3);
                 break;
             default:
                 messageType=undefined;
@@ -41,7 +41,7 @@ export default function AppAlert(props:any){
         renderStr=<Alert message={msg.value} type={messageType} banner showIcon closable/>
     }
 
-debugger;
+// debugger;
     return <>{renderStr}</>;
     
 }
