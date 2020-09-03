@@ -6,9 +6,6 @@ import 'antd/dist/antd.css';
 import './css/App.css';
 import AppLayout from './components/Layout';
 
-//abc
-//uuu
-
 ReactDOM.render(
   <Provider store={AppStore}>
     <AppLayout/>
