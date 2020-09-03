@@ -1,6 +1,7 @@
 export default class Tool{
 
     //tool
+    //d4
     public static isNullString(str:string|null|undefined):boolean{
         let bReturn: boolean = false;
         if (str===null||str===undefined||(typeof(str)==='string'&&str.replace(/(^s*)|(s*$)/g, "").length ===0))
