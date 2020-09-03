@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import ProductList from './product/ProductList';
+import Formtest from './product/Formtest';
 
 const { Header, Content } = Layout;
 
@@ -10,7 +11,7 @@ const AppLayout=()=>{
             <Layout>
                 <Header>Product Management</Header>
                 <Content>
-                    <ProductList/>
+                    <Formtest/>
                 </Content>
                 {/* <Footer></Footer> */}
             </Layout>
