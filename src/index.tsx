@@ -7,8 +7,6 @@ import './css/App.css';
 import AppLayout from './components/Layout';
 
 
-//aaa
-
 ReactDOM.render(
   <Provider store={AppStore}>
     <AppLayout/>
