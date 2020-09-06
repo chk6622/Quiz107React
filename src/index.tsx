@@ -6,7 +6,11 @@ import 'antd/dist/antd.css';
 import './css/App.css';
 import AppLayout from './components/Layout';
 
+<<<<<<< HEAD
 //master change abc
+=======
+//localhost master change
+>>>>>>> master change 20200906 12:26
 
 ReactDOM.render(
   <Provider store={AppStore}>
